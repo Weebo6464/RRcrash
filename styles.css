@@ -1,0 +1,203 @@
+/* Retro Rewind Crash Explanation — styles */
+:root {
+  --bg: #0b0c10;
+  --bg-elev: #11131a;
+  --text: #ebecf0;
+  --muted: #a3a7b3;
+  --card: #141724;
+  --border: #1f2433;
+  --accent: #7aa2ff;
+  --accent-2: #4dd6a2;
+  --shadow: 0 6px 24px rgba(0,0,0,.35);
+}
+
+html[data-theme="light"] {
+  --bg: #f7f8fb;
+  --bg-elev: #ffffff;
+  --text: #1d2333;
+  --muted: #58627a;
+  --card: #ffffff;
+  --border: #e7e8ef;
+  --accent: #2f68ff;
+  --accent-2: #1fbf88;
+  --shadow: 0 8px 28px rgba(0,0,0,.08);
+}
+
+* { box-sizing: border-box; }
+html, body { height: 100%; }
+body {
+  margin: 0;
+  font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Inter, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+  background: linear-gradient(180deg, var(--bg) 0%, var(--bg-elev) 100%);
+  color: var(--text);
+}
+
+.container {
+  width: min(1100px, 100% - 32px);
+  margin: 24px auto 80px;
+  display: grid;
+  gap: 16px;
+}
+
+.site-header, .site-footer {
+  width: min(1100px, 100% - 32px);
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 0;
+}
+
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: linear-gradient(180deg, var(--bg) 0%, transparent 100%);
+  backdrop-filter: blur(6px);
+}
+
+.brand {
+  display: flex; gap: 12px; align-items: center;
+}
+.logo {
+  font-size: 28px;
+}
+.title h1 {
+  font-size: 22px; margin: 0;
+}
+.subtitle { margin: 0; color: var(--muted); font-size: 12px; }
+
+.header-actions { display: flex; gap: 8px; align-items: center; }
+
+.btn {
+  border: 1px solid var(--border);
+  background: var(--card);
+  color: var(--text);
+  padding: 8px 12px;
+  border-radius: 12px;
+  cursor: pointer;
+  box-shadow: var(--shadow);
+  transition: transform .05s ease, border-color .2s ease, background .2s ease;
+}
+.btn:hover { transform: translateY(-1px); border-color: var(--accent); }
+.btn:active { transform: translateY(0); }
+.btn.outline { background: transparent; }
+.btn.ghost { background: transparent; border-style: dashed; }
+.btn.small { padding: 6px 10px; font-size: 12px; }
+
+.card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 16px;
+  box-shadow: var(--shadow);
+}
+
+.grid-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+@media (max-width: 900px) { .grid-2 { grid-template-columns: 1fr; } }
+
+.kv {
+  width: 100%;
+  border-collapse: collapse;
+}
+.kv tr td:first-child {
+  color: var(--muted);
+  width: 200px;
+}
+.kv td {
+  border-bottom: 1px dashed var(--border);
+  padding: 6px 4px;
+  vertical-align: top;
+  font-family: ui-monospace, "JetBrains Mono", SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 13px;
+}
+
+.stack {
+  width: 100%;
+  border-collapse: collapse;
+}
+.stack th, .stack td {
+  border-bottom: 1px dashed var(--border);
+  padding: 8px 6px;
+  font-family: ui-monospace, "JetBrains Mono", SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 13px;
+}
+.stack th { text-align: left; color: var(--muted); }
+
+.summary {
+  font-size: 15px;
+  line-height: 1.5;
+}
+.signals {
+  list-style: none;
+  padding-left: 16px;
+}
+.signals li {
+  margin: 8px 0; padding-left: 8px; border-left: 3px solid var(--accent);
+}
+
+.uploader {
+  position: relative;
+  border: 2px dashed var(--border);
+  border-radius: 14px;
+  padding: 24px;
+  text-align: center;
+  background: repeating-linear-gradient(135deg, transparent, transparent 10px, color-mix(in oklab, var(--border) 100%, transparent) 10px, color-mix(in oklab, var(--border) 100%, transparent) 20px);
+  margin-bottom: 12px;
+}
+.uploader input[type="file"] {
+  position: absolute; inset: 0; opacity: 0; cursor: pointer;
+}
+
+.paste-area summary {
+  cursor: pointer;
+  color: var(--accent);
+}
+.paste-area textarea {
+  width: 100%; min-height: 220px; resize: vertical;
+  margin-top: 12px; padding: 12px;
+  border-radius: 12px; border: 1px solid var(--border);
+  font-family: ui-monospace, "JetBrains Mono", SFMono-Regular, Menlo, Consolas, monospace;
+  background: var(--bg);
+  color: var(--text);
+}
+.paste-area .actions { display: flex; gap: 8px; margin-top: 8px; }
+
+.code {
+  white-space: pre-wrap;
+  word-break: break-word;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 12px;
+  background: var(--bg);
+  max-height: 350px; overflow: auto;
+}
+
+.tabs { display: flex; gap: 8px; margin-bottom: 8px; }
+.tab {
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--text);
+  padding: 8px 12px;
+  border-radius: 10px;
+  cursor: pointer;
+}
+.tab.active {
+  background: color-mix(in oklab, var(--accent) 18%, var(--card) 82%);
+  border-color: var(--accent);
+}
+
+.footnote { color: var(--muted); }
+.muted { color: var(--muted); }
+.sep { margin: 0 8px; color: var(--muted); }
+
+.site-footer {
+  gap: 8px;
+  color: var(--muted);
+  border-top: 1px dashed var(--border);
+  padding: 20px 0 40px;
+}

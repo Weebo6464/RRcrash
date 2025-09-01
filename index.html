@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Retro Rewind Crash Analyzer</title>
+  <meta name="description" content="Upload or paste a Pulsar .pul crash dump to get a human-readable explanation." />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 128 128'><text y='1em' font-size='96'>🕹️</text></svg>">
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="brand">
+      <div class="logo">🕹️</div>
+      <div class="title">
+        <h1>Retro Rewind</h1>
+        <p class="subtitle">Crash Analyzer</p>
+      </div>
+    </div>
+
+    <div class="header-actions">
+      <button id="themeToggle" class="btn" title="Toggle theme" aria-label="Toggle theme">🌗</button>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="card">
+      <h2>Upload a <code>.pul</code> file or paste the dump</h2>
+      <p class="muted">The analyzer reads registers, FPRs, stack frames, and symbols, then generates a short explanation.</p>
+
+      <div class="uploader" id="dropZone">
+        <input type="file" id="fileInput" accept=".pul,.txt" />
+        <p><strong>Drag &amp; drop</strong> your crash file here, or click to choose.</p>
+      </div>
+
+      <details class="paste-area">
+        <summary>Or paste crash output manually</summary>
+        <textarea id="pasteInput" placeholder="Paste the full crash output here..."></textarea>
+        <div class="actions">
+          <button id="analyzePaste" class="btn">Analyze Text</button>
+          <button id="clearPaste" class="btn ghost">Clear</button>
+        </div>
+      </details>
+    </section>
+
+    <section class="grid-2">
+      <div class="card">
+        <h3>Summary</h3>
+        <div id="summary" class="summary"></div>
+      </div>
+
+      <div class="card">
+        <h3>Key Signals</h3>
+        <ul id="signals" class="signals"></ul>
+      </div>
+    </section>
+
+    <section class="card">
+      <h3>Parsed Details</h3>
+      <div class="tabs">
+        <button class="tab active" data-tab="rawTab">Raw</button>
+        <button class="tab" data-tab="registersTab">Registers</button>
+        <button class="tab" data-tab="stackTab">Stack</button>
+        <button class="tab" data-tab="metaTab">Meta</button>
+      </div>
+
+      <div id="rawTab" class="tab-panel active">
+        <pre id="rawOut" class="code"></pre>
+        <button id="copyRaw" class="btn ghost small">Copy Raw</button>
+      </div>
+
+      <div id="registersTab" class="tab-panel">
+        <div class="grid-2">
+          <div>
+            <h4>Core</h4>
+            <table class="kv" id="coreRegs"></table>
+          </div>
+          <div>
+            <h4>GPRs</h4>
+            <table class="kv" id="gprRegs"></table>
+          </div>
+        </div>
+        <h4>FPRs</h4>
+        <table class="kv" id="fprRegs"></table>
+      </div>
+
+      <div id="stackTab" class="tab-panel">
+        <table class="stack" id="stackTable">
+          <thead>
+            <tr><th>#</th><th>SP</th><th>LR</th><th>Symbol</th></tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+
+      <div id="metaTab" class="tab-panel">
+        <table class="kv" id="metaTable"></table>
+      </div>
+    </section>
+
+    <section class="card footnote">
+      <h3>How this works</h3>
+      <p>
+        We parse Pulsar crash dumps (<code>.pul</code> files) by scanning for registers,
+        stack frames, and call chains. Instead of relying on external rules, the analyzer
+        looks for signals like <em>null return addresses</em>, <em>unresolved symbols</em>,
+        or suspicious register values, then produces a short explanation.
+      </p>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <span>&copy; <span id="year"></span> Retro Rewind — MIT License</span>
+    <span class="sep">•</span>
+    <a href="https://github.com" target="_blank" rel="noopener">GitHub</a>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html
